@@ -1,0 +1,152 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NAME:             workflow.tex
+%
+% AUTHOR:           Ethan D. Twardy
+%
+% DESCRIPTION:      Description of the Workflow I plan to use when developing
+%                   this program.
+%
+% CREATED:          06/06/2018
+%
+% LAST EDITED:      06/10/2018
+%%%
+\documentclass[12pt]{article}
+\pagestyle{empty} % Prevent style conflicts with `fancy'
+\usepackage[margin=1in]{geometry} % Pretty much just to set the margins
+\usepackage{fancyhdr} % Header & Footer
+\usepackage{setspace} % Spacing.
+\usepackage{graphicx} % Images
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks,
+  citecolor=black,
+  filecolor=black,
+  linkcolor=black,
+  urlcolor=black
+}
+
+% Header
+% pdflatex will probably complain about \headheight.
+\setlength{\headheight}{28pt}
+\pagestyle{fancy}
+\fancyhf{}
+% Header
+\rhead{Ethan D.Twardy}
+\lhead{Autoscrum Workflow Definition}
+
+% This may come in handy.
+%% \setlength{\emergencystretch}{15pt}
+\setlength{\parskip}{10pt}
+\setlength{\parindent}{0pt}
+
+\title{Autoscrum Workflow Definition}
+\author{Ethan D. Twardy}
+
+\begin{document}
+\doublespacing
+
+\maketitle
+\pagebreak
+
+\tableofcontents
+
+\section{Introduction}
+This document describes in detail the development process which will be used to
+effectively realize the Autoscrum application. The creation of the product will
+follow a modified Test-Driven Development framework, wherein design
+requirements will be set forth, and iteratively the architecture of the product
+will be delivered. As each measureable level of the architecture is defined,
+tests for the relevant portions will be developed. After tests and requirements
+for the product have been fully developed, the tests will be implemented, and
+the development of the initial release will be executed. In the next section,
+a visual representation of the project flow will be given, and then each
+portion of the flow will be described in detail.
+\pagebreak
+
+\section{Development Flowchart}
+\begin{figure}[hb]
+  \includegraphics[width=\textwidth]{assets/designflow.png}
+\end{figure}
+\pagebreak
+
+\section{Workflow Description}
+\subsection{Problem Statement}
+In the earliest stage of development a document will be drafted which, at the
+highest level will be a precise summary of the issue that the product will
+solve, and how the product intends to solve it. This will be an informal but
+comprehensive description of the system and its main functionality. This
+document will henceforth be referred to as the {\it Problem Statement}.
+
+\subsection{Design Requirements}
+A comprehensive set of {\it black box} requirements which describe all
+functionality of the system that will be exposed to the user. This document
+will be modular, composed of many standalone documents--each only a page or so.
+Each one of these documents will define one design requirement which will be
+specific and measureable. In total, these design requirements will define all
+behavior of the system for any relevant combination of inputs. These design
+requirements are not to be confused with implementation details.
+
+\subsection{Design Req. Review}
+See the section on \hyperref[sec:review]{Design Review processes}.
+\pagebreak
+
+\subsection{System Test Definition}
+This is where system level tests are designed to verify that the system meets
+every design requirement. These tests should be unambiguous in definition,
+verifiable, and there should be a clear and consistent traceability between
+the design requirements and each of the system tests. This document will most
+likely also be split into many smaller documents.
+
+\subsection{System Test Review}
+See the section on \hyperref[sec:review]{Design Review processes}.
+
+\subsection{High-Level Architecture (HLA)}
+In this phase, the major components of the implementation will be defined.
+Specifically, well-defined interfaces will be created to allow all of the
+high-level modules to communicate and perform the duties of the system in a
+way that hides the implementation of the modules from each other. This
+process is taken from the principles of Object-Oriented design.
+
+\subsection{Integration Test Definition}
+Here, tests will be written which stress all functionality of the component
+interfaces. Most likely, these tests will take the form of ``unit tests'' which
+will stress the high-level modules with a wide range of inputs, to ensure that
+no set of inputs will cause the modules to err or break design requirements.
+
+\subsection{Integration Test Review}
+See the section on \hyperref[sec:review]{Design Review processes}.
+
+\subsection{Unit Definition}
+Here, the structure of the low level modules (here referred to as {\it Units})
+are define. Additionally, the behavior and implementation of each of these
+units are laid out. Traditionally, a unit is an atomic element of the design.
+For example, in a software design, a ``unit'' could be a class or a function.
+
+\subsection{Unit Test Design}
+This is the design stage for unit tests. This test design stage follows the
+same design workflow as the rest of the test design stages. However, contrary
+to the other test categories, these tests will be exclusively implemented in
+code.
+
+\subsection{Unit Test Analysis}
+See the section on \hyperref[sec:review]{Design Review processes}.
+
+\subsection{Test Implementation \& Execution}
+In this section tests will be implemented and the design of the first release
+of the final product will be executed, in that order. The reader should note
+that design is an iterative process, and it may become necessary to alter one
+or more of the requirements or tests during the completion of the release.
+The purpose of the lengthy design phase is to minimize this risk.
+
+\subsection{Design Reviews}
+\label{sec:review}
+The purpose of each of the design review phases is to perform a retrospective
+analysis on the two preceding design phases. If there is a problem with the
+previous design phase, it may have stemmed from an earlier stage of
+development. The cause for the thoroughness is to streamline the process once
+actual implementation begins, and to prevent errors from permeating through to
+later stages in the design process.
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
