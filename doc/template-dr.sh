@@ -8,7 +8,7 @@
 #
 # CREATED:	    06/10/2018
 #
-# LAST EDITED:	    06/13/2018
+# LAST EDITED:	    06/24/2018
 ###
 
 ###############################################################################
@@ -39,7 +39,7 @@ if [[ ! -d $drDir ]]; then
     error "The $drDir directory is not present in the current" \
 	  "directory"
 fi
-entries=`ls -1 $drDir | grep '\.tex' | grep '[[:digit:]]'`
+entries=`ls -1 $drDir | grep '[[:digit:]]\.tex' | grep -v '~'`
 
 # Parse filename into an array of integers.
 ints=""
@@ -95,5 +95,9 @@ sed -i '' 's|'"${group}${dateGroup}"'|\1'$date'|' $newPath
 regex='Date No, Year'
 date=`date '+%b %d, %Y'`
 sed -i '' 's|& '"$regex"' &|\& '"$date"' \&|' $newPath
+
+# Set the variable nextReq to the path of the new file.
+# This makes some things easier in the long run.
+export nextReq="$newPath"
 
 ###############################################################################

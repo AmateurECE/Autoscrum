@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commandLineInterface>
+  <!-- Miscellaneous requirements which pertain to human interaction with the
+       Command Line Interface module go here. -->
+
+  <dr tags="base-functionality" status="done">
+    Autoscrum will support a command line tool, which will be the primary
+    interface for the user to interact with Autoscrum.
+  </dr>
+  <dr>
+    Autoscrum will allow the team the ability to name the Autoscrum Master.
+  </dr>
+  <dr tags="base-functionality">
+    Autoscrum will be able to handle two or more requests from different
+    users simultaneously.
+  </dr>
+  <dr>
+    Autoscrum will support an interactive shell as part of the command line
+    tool.
+  </dr>
+  <dr>
+    Autoscrum will support command line auto-completion.
+  </dr>
+  <dr>
+    Autoscrum will support advanced search features which allow
+    searching for stories/issues/commits/etc based on keywords, tags, and
+    other criteria.
+  </dr>
+  <dr tags="base-functionality">
+    Autoscrum will support a "checkout" command which will set one particular
+    Scrum Object to be "active," meaning that any "update" commands won't need
+    to be run with the fully qualified name of the Scrum Object.
+  </dr>
+  <dr tags="base-functionality">
+    Autoscrum will support a filesystem-like naming scheme to specify fully
+    qualified names of Scrum Objects. Consider, as an example, that a user
+    wanted to reference the fully qualified task name of a task that exists
+    as a part of the story "story" in the project "project." If the tasks name
+    is "task1," the fully qualified name of the task would be
+    /project/story/task1.
+  </dr>
+  <dr tags="base-functionality">
+    Autoscrum will generate an error message in the case that the user issues
+    a command to update a Scrum Object without specifying a fully qualified
+    name and there is no currently checked out Scrum Object.
+  </dr>
+  <dr tags="base-functionality">
+    Autoscrum will support a configuration module, containing key/value pairs,
+    which can be modified by the user. The purpose of this module will be to
+    allow the user to tune their experience for performance and behavior, to
+    provide a unique experience optimized for their own workflow.
+  </dr>
+
+  <loginLogout>
+    <!-- Requirements dealing with login/logout behavior, security, etc. -->
+    <dr tags="base-functionality">
+      Autoscrum will require users log in to use resources and services
+      provided by Autoscrum.
+    </dr>
+    <dr>
+      Autoscrum will support integration with preexisting user information
+      systems, such as openssl-passwd or LDAP.
+    </dr>
+    <dr>
+      Autoscrum will allow configuration of login/session behavior. This
+      configuration will be accessible only to the owner of the Autoscrum
+      executable.
+    </dr>
+
+    <session abstract="true">
+      <!-- This class is an abstraction, which funnels interaction with all sub
+	   classes. Any requirements which pertain to all subclasses can go
+	   here. -->
+      <dr tags="base-functionality">
+	Autoscrum will support temporary "sessions"--a period of time where the
+	user will not be asked to reauthenticate when they attempt a query to
+	Autoscrum's resources or services.
+      </dr>
+      <dr>
+	Autoscrum will support configuration of the length of time for which a
+	valid session may exist.
+      </dr>
+
+      <issue>
+	<!-- Requirements that handle the user interface for the Issue
+	     object. -->
+	<dr>
+	  Autoscrum will support issues as objects for tracking the history of
+	  defects or problems with a project, as well as their resolution.
+	</dr>
+	<dr>
+	  Autoscrum will support mirroring of issues submitted to any VCS
+	  (Versioning Control System) Hosting Service.
+	</dr>
+	<dr>
+	  Autoscrum will support an interface for submitting issues by any
+	  recognized Autoscrum user.
+	</dr>
+	<dr>
+	  Autoscrum will support an interface for closing issues, for the
+	  Project Owner and any Developer assigned to resolve the issue.
+	</dr>
+	<dr>
+	  Autoscrum will support an interface for responding to issues, for the
+	  Project Owner and any Developer assigned to the issue.
+	</dr>
+	<dr>
+	  Autoscrum will support an interface for assigning issues to members
+	  of the Development Team, for the Project Owner.
+	</dr>
+      </issue>
+
+      <task>
+	<!-- Requirements that handle the user interface for the Task
+	     object. -->
+	<dr tags="base-functionality">
+	  Autoscrum will support tasks as a means for updating progress towards
+	  completing stories.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface for creating tasks for stories,
+	  for the Developer who was given the story to complete.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface for updating tasks, for the
+	  Developer who was assigned the task.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface deleting tasks, for the Developer
+	  who was given the story to complete.
+	</dr>
+      </task>
+
+      <story>
+	<!-- Requirements that handle the user interface for the Story
+	     object. -->
+	<dr tags="base-functionality">
+	  <!-- /* TODO: Add reference to the Scrum Guide in the glossary */ -->
+	  Autoscrum will recognize Stories as Scrum Objects, according to The
+	  Scrum Guide.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface for creating stories, for the
+	  Project Owner.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface for updating stories, for the
+	  Project Owner and the Developer given the story to complete.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface for deleting stories, for the
+	  Project Owner.
+	</dr>
+	<dr>
+	  Autoscrum will support "tags" for stories. Tags are static references
+	  which are used to categorize and prioritize stories.
+	</dr>
+	<dr>
+	  Autoscrum will allow stories which are sequels or prequels to other
+	  stories.
+	</dr>
+      </story>
+
+      <backlog>
+	<!-- Requirements that handle the user interface for the Backlog
+	     object. -->
+	<dr tags="base-functionality">
+	  Autoscrum will maintain a backlog containing stories.
+	</dr>
+	<dr>
+	  Autoscrum will support both automatic and manual backlog maintenance.
+	</dr>
+	<dr>
+	  Autoscrum will support automatic story prioritization in the backlog
+	  based on tags. Autoscrum will take as input an XML hierarchy of tag
+	  priority. For the example below, assume that tag1 is the parent of
+	  tag2, which is the parent of tag3 and tag4, and tag3 and tag4 are
+	  siblings.
+	  {
+	  Story: Example story
+	  Tags: tag1, tag3, tag4
+	  Priority: f(l(tag1), l(tag3), l(tag4))
+	  }
+	  In the example, f() is a function which returns the total priority of
+	  the story and l() is a function which returns the level of the tag
+	  (i.e. l(tag1) = 0, l(tag3) = 2, etc).
+	</dr>
+      </backlog>
+
+      <sprint>
+	<!-- Requirements that handle the user interface for the Sprint
+	     object. -->
+	<dr tags="base-functionality">
+	  <!-- /* TODO: Add reference to the Scrum Guide. */ -->
+	  Autoscrum will support Sprints, according to the Scrum Guide.
+	</dr>
+	<dr>
+	  Autoscrum will allow configuration of sprint length.
+	</dr>
+	<dr>
+	  Autoscrum will support "Epics." Epics are user defined periods of
+	  time which contain a number of sprints, related in some way to be
+	  associated together in a meaningful way.
+	</dr>
+
+	<metrics>
+	  <!-- Requirements that handle the user interface for Sprint Metrics
+	       and related objects. -->
+	  <dr tags="base-functionality">
+	    Autoscrum will provide metrics to display the current user's
+	    contribution to the sprint goal.
+	  </dr>
+	  <dr>
+	    Autoscrum will provide metrics to display the contribution of other
+	    users and the progress of the team. This printout will include
+	    to-do, in-progress, and completed stories.
+	  </dr>
+	  <image>
+	    <!-- Requirements that handle the user interface for Images which
+		 are created in lieu of depicting Sprint Metrics. -->
+	    <dr>
+	      Autoscrum will support creation of graphs and other images in PNG
+	      format for any metrics which may be represented in this fashion.
+	    </dr>
+	  </image>
+	</metrics>
+
+	<planning>
+	  <!-- Requirements that handle the user interface for Sprint Planning
+	       and related objects. -->
+	  <dr tags="base-functionality">
+	    Autoscrum will support creation of a Sprint Goal, according to
+	    The Scrum Guide.
+	  </dr>
+	  <dr tags="base-functionality">
+	    Autoscrum will support manual configuration of the sprint goal.
+	  </dr>
+	  <dr>
+	    Autoscrum will support automatic configuration of the sprint goal
+	    based on the developer bids, backlog, and Neural Network prediction
+	    of performance. The purpose of these inputs is to allow Autoscrum
+	    to assign the Sprint Goal to maximize the efficiency of the
+	    Development Team.
+	  </dr>
+	  <dr>
+	    Autoscrum will have a story bid submitting system which uses a
+	    modified Fibonacci sequence.
+	  </dr>
+	  <dr>
+	    Autoscrum will assign stories to developers after they have
+	    submitted their time bids for the upcoming sprint, if automatic
+	    sprint planning is enabled.
+	  </dr>
+	  <dr>
+	    Autoscrum will use a Neural Network to project team performance and
+	    to set the sprint goal.
+	  </dr>
+
+	  <email>
+	    <!-- Requirements that handle the user interface for Email and
+		 related objects. -->
+	    <dr>
+	      Autoscrum will use email as the primary mode of communication and
+	      Scrum event facilitation.
+	    </dr>
+	    <dr>
+	      Autoscrum will sign its name at the end of every email to the
+	      Development Team. This name is the name given to Autoscrum by the
+	      Development Team.
+	    </dr>
+	    <dr>
+	      Autoscrum will allow configuration for the content of the email
+	      messages sent to the development team, for the Project Owner and
+	      Scrum Master.
+	    </dr>
+	    <dr>
+	      Autoscrum will support configuration for sending out an email to
+	      all developers on the team at regular intervals, if the Project
+	      Owner so desires, containing the progress towards the sprint
+	      goal. This is how Autoscrum will facilitate the "Daily Scrum."
+	    </dr>
+	    <dr>
+	      Autoscrum will allow configuration of the time interval that the
+	      "Daily Scrum" will occur.
+	    </dr>
+	    <dr>
+	      Autoscrum will support configuration for sending an email to the
+	      Development Team at the end of the sprint period, if desired by
+	      the Project Owner. This email will facilitate the "Sprint
+	      Review."
+	    </dr>
+	    <dr>
+	      Autoscrum will allow configuration for sending the Sprint Review
+	      to the Stakeholders, if desired by the Project Owner.
+	    </dr>
+	    <dr>
+	      Autoscrum will support configuration for sending an email to the
+	      Development Team at the end of the sprint, if desired by the
+	      Project Owner, in order to facilitate the "Sprint Retrospective."
+	    </dr>
+	    <dr>
+	      Autoscrum will support configuration for sending an email to the
+	      Development Team containing the Sprint Goal, if so desired by the
+	      Project Owner, when sprint planning is complete. This may be
+	      configured to occur regardless of whether automatic sprint
+	      planning is enabled.
+	    </dr>
+	  </email>
+	</planning>
+      </sprint>
+
+      <project>
+	<!-- Requirements that handle the user interface for Project
+	     objects. -->
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface for creating Projects, for any
+	  recognized Autoscrum user.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface for updating Projects, for the
+	  Project Owner.
+	</dr>
+	<dr>
+	  Autoscrum will allow "private" projects--These projects will be
+	  protected by a project-global password. In addition, recognized
+	  Autoscrum users must be invited by the Project Owner to view the
+	  project's resources.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will make all Projects "public" by default.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support an interface for deleting Projects, for the
+	  Project Owner.
+	</dr>
+	<dr>
+	  Autoscrum will have the capability to point to released versions of
+	  the product.
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will support Scrum roles for users, which will change the
+	  user experience--this will affect user permissions and
+	  responsibilities. Roles supported by Autoscrum include, but are not
+	  limited to:
+	  * Project Owner
+	  * Scrum Master
+	  * Developer
+	</dr>
+	<dr tags="base-functionality">
+	  Autoscrum will not allow a Project to exist without administration
+	  by a registered Project Owner who is a recognized Autoscrum user.
+	</dr>
+	<dr>
+	  Autoscrum will be able to produce a comprehensive history of a
+	  Project maintained by Autoscrum. The purpose of this is to create a
+	  log which can be used (by an uninformed party, for example) to follow
+	  the evolution of a product from inception.
+	</dr>
+	
+	<metrics>
+	  <!-- Requirements that handle the user interface for Project Metrics
+	       and related objects. -->
+	  <dr>
+	    Autoscrum will maintain stats about tag usage.
+	  </dr>
+
+	  <image>
+	    <!-- Requirements that handle the user interface for Images which
+		 are created in lieu of depicting Sprint Metrics. -->
+	  </image>
+	</metrics>
+      </project>
+    </session>
+  </loginLogout>
+</commandLineInterface>
