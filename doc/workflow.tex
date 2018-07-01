@@ -8,7 +8,7 @@
 %
 % CREATED:          06/06/2018
 %
-% LAST EDITED:      06/15/2018
+% LAST EDITED:      06/29/2018
 %%%
 \documentclass[12pt]{article}
 \pagestyle{empty} % Prevent style conflicts with `fancy'
@@ -80,11 +80,19 @@ document will henceforth be referred to as the {\it Problem Statement}.
 \subsection{Design Requirements}
 A comprehensive set of {\it black box} requirements which describe all
 functionality of the system that will be exposed to the user. This document
-will be modular, composed of many standalone documents--each only a page or so.
+will be modular, composed of many standalone documents--each only a page in
+length.
 Each one of these documents will define one design requirement which will be
 specific and measureable. In total, these design requirements will define all
-behavior of the system for any relevant combination of inputs. These design
-requirements are not to be confused with implementation details.
+behavior of the interfaces exposed to the user for any relevant combination of
+inputs. These design requirements are not to include implementation details.
+
+The design requirements will initially be outlined in an XML file, in order
+to create the hierarchy of dependency and to provide feature organization.
+A Python script will be used to map (that is, convert) this XML into a system
+of organized \LaTeX documents. Specification of the requirements will be
+iterative. It is likely that more will be added during the definition of the
+High Level Architecture Requirements, in order to be more comprehensive.
 
 \subsection{Design Req. Review}
 See the section on \hyperref[sec:review]{Design Review processes}.
@@ -97,36 +105,52 @@ verifiable, and there should be a clear and consistent traceability between
 the design requirements and each of the system tests. This document will most
 likely also be split into many smaller documents.
 
+The tests themselves will likely come in the form of procedures, to be
+completed by a Test Engineer, or Shell scripts which can be run to perform the
+test.
+
 \subsection{System Test Review}
 See the section on \hyperref[sec:review]{Design Review processes}.
 
-\subsection{High-Level Architecture (HLA)}
+\subsection{High-Level Architecture Requirements (HLAR)}
 In this phase, the major components of the implementation will be defined.
 Specifically, well-defined interfaces will be created to allow all of the
 high-level modules to communicate and perform the duties of the system in a
-way that hides the implementation of the modules from each other. This
-process is taken from the principles of Object-Oriented design.
+way that hides the implementation of the modules from each other.
+
+This the the highest abstraction of the system which will contain
+implementation details. It is in this phase where certain design decisions
+will be made.
 
 \subsection{Integration Test Definition}
-Here, tests will be written which stress all functionality of the component
-interfaces. Most likely, these tests will take the form of ``unit tests'' which
-will stress the high-level modules with a wide range of inputs, to ensure that
-no set of inputs will cause the modules to err or break design requirements.
+These tests are meant to stress the interfaces defined and exposed in the
+HLAR. There is, however, an important distinction to make as to the scope
+of these tests. These procedures will not test any interfaces which are
+exposed to the user. In addition, these procedures will not test any
+interfaces which are limited to the call stack. As an example, these tests may
+include procedures to verify:
+
+\begin{itemize}
+\item Networking interfaces
+\item Non-User hardware
+\item Asynchronous channels for program communication
+\end{itemize}
+
+These tests will be entirely implemented in code.
 
 \subsection{Integration Test Review}
 See the section on \hyperref[sec:review]{Design Review processes}.
 
 \subsection{Unit Definition}
 Here, the structure of the low level modules (here referred to as {\it Units})
-are define. Additionally, the behavior and implementation of each of these
-units are laid out. Traditionally, a unit is an atomic element of the design.
-For example, in a software design, a ``unit'' could be a class or a function.
+are defined, including their behavior and implementation. Traditionally, a
+unit is an atomic element of the design. For example, in a software design,
+a unit could be a class or a function.
 
 \subsection{Unit Test Design}
-This is the design stage for unit tests. This test design stage follows the
-same design workflow as the rest of the test design stages. However, contrary
-to the other test categories, these tests will be exclusively implemented in
-code.
+This design stage will be aimed at authoring tests which verify the intimate
+details of unit implementation. These tests will also be implemented entirely
+in code.
 
 \subsection{Unit Test Analysis}
 See the section on \hyperref[sec:review]{Design Review processes}.
