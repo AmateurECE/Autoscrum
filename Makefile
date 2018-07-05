@@ -8,13 +8,13 @@
 #
 # CREATED:	    07/01/2018
 #
-# LAST EDITED:	    07/01/2018
+# LAST EDITED:	    07/02/2018
 ###
 # TODO: Replace this Make system with Automake.
 
 CONFIG_DEV=1
 
-CFLAGS=-Wall -O0 -Wextra
+CFLAGS=-g -Wall -O0 -Wextra -I./devClient/include
 CC=gcc
 
 # This Makefile sets the obj-c list
@@ -43,6 +43,7 @@ force:
 clean:
 	rm -f source/*.o
 	rm -f devClient/*.o
+	rm -rf devClient/*.dSYM
 	rm -f autoscrum
 	rm -f client
 

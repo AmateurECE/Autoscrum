@@ -11,5 +11,7 @@
 ###
 
 obj-c+=devClient.o
+obj-c+=autoscrumServer.o
+obj-c+=devClientConfig.o
 
 ###############################################################################
