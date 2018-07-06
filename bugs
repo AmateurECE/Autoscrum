@@ -1,1 +1,8 @@
+include/except.h: Fill out list of exported (useful) symbols. | id:0f92e47e7eff16445665cf1dd7b82773b37480de
+doc/dr-hierarchy.xml: Update the backlog maintenance reqs --> | id:1eaac7223abde8c435a00061780bbcae3a49fb15
+doc/server-arch.tex: Make toc | id:32bff684869188c73d9d9fd07ea9721026d64760
+Makefile: Replace this Make system with Automake. | id:358008242eac41e36379327177cbef5514cef8ae
+include/except.h: These terminal ctl chars are not portable. Fix with ncurses. | id:4b0a76e342710f0c87c565804f3dec492174e019
+devClient/autoscrumServer.c: change makeCommand to use pascal-style strings | id:6e62d4eb7603ae8926da04711319be20aadc90a3
 README.md: Finish the Workflow section | id:b67adb338ca6b7b30aa736a8f2cfba9d301372d4
+source/serve/autoscrumClient.c: Change to be more verbose | id:e41b5cb26f77f0c3609ea51c46667210f69da761

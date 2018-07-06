@@ -1,0 +1,3 @@
+[submodule "source/Stack"]
+	path = source/Stack
+	url = https://github.com/AmateurECE/Stack

@@ -10,7 +10,8 @@
 # LAST EDITED:	    07/05/2018
 ###
 
-obj-s+=serve/autoscrum.o
-obj-s+=serve/autoscrumClient.o
+obj-s+=autoscrum.o
+obj-s+=autoscrumClient.o
+obj-s+=../Stack/stack.c
 
 ###############################################################################

@@ -14,7 +14,7 @@
 
 CONFIG_DEV=1
 
-CFLAGS=-g -Wall -O0 -Wextra -I./include \
+CFLAGS=-g -Wall -O0 -Wextra -I./include -I./source/Stack/ \
 	-D CONFIG_DEFAULT_PORT=8082 -D CONFIG_DEBUG
 devClient/client: CFLAGS += -I./devClient/include
 CC=gcc
@@ -23,10 +23,10 @@ CC=gcc
 include devClient/Makefile
 
 # This Makefile sets the obj-s list
-include source/Makefile
+include source/serve/Makefile
 
 c-tgts=$(addprefix devClient/,$(obj-c))
-s-tgts=$(addprefix source/,$(obj-s))
+s-tgts=$(addprefix source/serve/,$(obj-s))
 
 dev: devClient/client source/serve/autoscrum
 	@mv $^ ./
