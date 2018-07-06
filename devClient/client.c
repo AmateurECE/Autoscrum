@@ -24,7 +24,7 @@
  * MACRO DEFINITIONS
  ***/
 
-#define MODULE "devClient: "
+#define MODULE "devClient"
 #define ERR_USAGE \
   "Usage: client {command} [options...]"
 #define ERR_SERVER \
@@ -53,6 +53,9 @@ int main(int argc, char * argv[]) {
 
   /* Disconnect from the server */
   autoscrumDisconnect(&server);
+#ifdef CONFIG_DEBUG
+  printf(MODULE"Successfully disconnected from server.\n");
+#endif
 
   /* Cleanly free the configuration data */
   deleteConfig(&cfg);

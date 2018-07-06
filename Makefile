@@ -8,13 +8,15 @@
 #
 # CREATED:	    07/01/2018
 #
-# LAST EDITED:	    07/02/2018
+# LAST EDITED:	    07/05/2018
 ###
 # TODO: Replace this Make system with Automake.
 
 CONFIG_DEV=1
 
-CFLAGS=-g -Wall -O0 -Wextra -I./devClient/include
+CFLAGS=-g -Wall -O0 -Wextra -I./include \
+	-D CONFIG_DEFAULT_PORT=8082 -D CONFIG_DEBUG
+devClient/client: CFLAGS += -I./devClient/include
 CC=gcc
 
 # This Makefile sets the obj-c list
@@ -26,13 +28,12 @@ include source/Makefile
 c-tgts=$(addprefix devClient/,$(obj-c))
 s-tgts=$(addprefix source/,$(obj-s))
 
-dev: devClient/devClient source/autoscrum
-	@mv devClient/devClient ./client
-	@mv source/autoscrum ./autoscrum
+dev: devClient/client source/serve/autoscrum
+	@mv $^ ./
 
-devClient/devClient: $(c-tgts)
+devClient/client: $(c-tgts)
 
-source/autoscrum: $(s-tgts)
+source/serve/autoscrum: $(s-tgts)
 
 $(c-tgts): force
 

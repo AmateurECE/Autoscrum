@@ -7,9 +7,10 @@
 #
 # CREATED:	    07/01/2018
 #
-# LAST EDITED:	    07/01/2018
+# LAST EDITED:	    07/05/2018
 ###
 
-obj-s+=autoscrum.o
+obj-s+=serve/autoscrum.o
+obj-s+=serve/autoscrumClient.o
 
 ###############################################################################

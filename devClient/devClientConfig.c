@@ -7,7 +7,7 @@
  *
  * CREATED:	    07/01/2018
  *
- * LAST EDITED:	    07/01/2018
+ * LAST EDITED:	    07/05/2018
  ***/
 
 /******************************************************************************
@@ -23,10 +23,9 @@
  * MACRO DEFINITIONS
  ***/
 
-#define MODULE "devClientConfig: "
+#define MODULE "devClientConfig"
 /* 127.0.0.1 - The loopback address */
 #define CONFIG_DEFAULT_HOSTNAME "localhost"
-#define CONFIG_DEFAULT_PORT 8081
 
 /******************************************************************************
  * API FUNCTIONS

@@ -34,7 +34,7 @@
 #   define CONFIG_DEBUG_AUTOSCRUMSERVER
 #endif
 
-#define MODULE "autoscrumServer: "
+#define MODULE "autoscrumServer"
 
 /******************************************************************************
  * STATIC FUNCTION PROTOTYPES
@@ -87,7 +87,7 @@ autoscrumServer * autoscrumConnect(char * hostname, uint16_t port)
     throw(MODULE"Could not connect to host", NULL);
   }
 #ifdef CONFIG_DEBUG_AUTOSCRUMSERVER
-  printf(MODULE"Successfully connected to server.");
+  printf(MODULE"Successfully connected to server.\n");
 #endif
 
   /* Allocate and initialize the return object */
@@ -129,7 +129,7 @@ int autoscrumCommand(autoscrumServer * server, int argc, char * argv[argc])
   /* TODO: change makeCommand to use pascal-style strings */
   char * command = makeCommand(argc, argv, &total);
 #ifdef CONFIG_DEBUG_AUTOSCRUMSERVER
-  printf(MODULE"Command is: %s\n", command);
+  printf(MODULE"Command is: %s\n", command + 2);
 #endif
 
   /* Write the command to the socket */
@@ -143,7 +143,7 @@ int autoscrumCommand(autoscrumServer * server, int argc, char * argv[argc])
   /* Read sizeof(size_t) bytes from the socket into &size */
   char buffer[2];
   if (read(server->socketfd, buffer, 2) != 2)
-    throw(MODULE"No response from server.", -1);
+    return 0;
   uint16_t size = (buffer[1] << 8) + buffer[0];
 #ifdef CONFIG_DEBUG_AUTOSCRUMSERVER
   printf(MODULE"Reading %d bytes from server...\n", size);
@@ -218,8 +218,8 @@ static char * makeCommand(int argc, char * argv[argc],
    * we are writing the size of the string, not including the two bytes eaten
    * by the size parameter, to the first two bytes of the string.
    */
-  command = (char[]){(char)((*total - 2) >> 8),
-	      (char)(*total - 2)};
+  *command = (char)((*total - 2) >> 8);
+  *(command + 1) = (char)(*total - 2);
   char * temp = command + 2;
   for (int i = 0; i < argc; i++)
     temp = myStrcat(temp, argv[i]);
