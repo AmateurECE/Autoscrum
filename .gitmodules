@@ -1,3 +1,6 @@
 [submodule "source/Stack"]
 	path = source/Stack
 	url = https://github.com/AmateurECE/Stack
+[submodule "source/Singly-Linked-List"]
+	path = source/Singly-Linked-List
+	url = https://github.com/AmateurECE/Singly-Linked-List
