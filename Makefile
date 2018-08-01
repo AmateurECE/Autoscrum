@@ -8,22 +8,27 @@
 #
 # CREATED:	    07/01/2018
 #
-# LAST EDITED:	    07/05/2018
+# LAST EDITED:	    07/31/2018
 ###
 # TODO: Replace this Make system with Automake.
 
 CONFIG_DEV=1
 
-CFLAGS=-g -Wall -O0 -Wextra -I./include -I./source/Stack/ \
+export CFLAGS:=-g -Wall -O0 -Wextra -I./include -I./source/Stack/ \
 	-D CONFIG_DEFAULT_PORT=8082 -D CONFIG_DEBUG
 devClient/client: CFLAGS += -I./devClient/include
-CC=gcc
+export CC:=gcc
+export BINARIES=devClient/client source/serve/autoscrum
 
 # This Makefile sets the obj-c list
 include devClient/Makefile
 
 # This Makefile sets the obj-s list
 include source/serve/Makefile
+
+test-mkdir:=test/mk
+test-files:=$(shell ls $(test-mkdir))
+test-tgts:=$(patsubst %.mk,%,$(test-files))
 
 c-tgts=$(addprefix devClient/,$(obj-c))
 s-tgts=$(addprefix source/serve/,$(obj-s))
@@ -39,12 +44,17 @@ $(c-tgts): force
 
 $(s-tgts): force
 
+test: $(test-tgts)
+
+$(test-tgts):
+	@$(MAKE) -s -f $(test-mkdir)/$@.mk
+
 force:
 
 clean:
-	rm -f source/*.o
-	rm -f devClient/*.o
-	rm -rf devClient/*.dSYM
+	rm -f `find $(PWD) -name *.o`
+	rm -rf `find $(PWD) -name *.dSYM`
+	$(MAKE) -f source/Stack/Makefile clean
 	rm -f autoscrum
 	rm -f client
 
