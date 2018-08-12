@@ -8,15 +8,16 @@
 #
 # CREATED:	    07/01/2018
 #
-# LAST EDITED:	    07/31/2018
+# LAST EDITED:	    08/12/2018
 ###
 # TODO: Replace this Make system with Automake.
 
 CONFIG_DEV=1
 
 export CFLAGS:=-g -Wall -O0 -Wextra -I./include -I./source/Stack/ \
-	-D CONFIG_DEFAULT_PORT=8082 -D CONFIG_DEBUG
+	-D CONFIG_DEFAULT_PORT=8082
 devClient/client: CFLAGS += -I./devClient/include
+export LDFLAGS:=`pkg-config --libs sqlite3`
 export CC:=gcc
 export BINARIES=devClient/client source/serve/autoscrum
 
@@ -52,6 +53,7 @@ $(test-tgts):
 force:
 
 clean:
+	ctags -e -R . # Generate ctags
 	rm -f `find $(PWD) -name *.o`
 	rm -rf `find $(PWD) -name *.dSYM`
 	$(MAKE) -f source/Stack/Makefile clean
