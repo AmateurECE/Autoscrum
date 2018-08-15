@@ -8,7 +8,7 @@
  *
  * CREATED:	    07/05/2018
  *
- * LAST EDITED:	    07/05/2018
+ * LAST EDITED:	    07/15/2018
  ***/
 
 /******************************************************************************
@@ -21,6 +21,7 @@
 #include <string.h>
 
 #include <arpa/inet.h>
+#include <errno.h>
 #include <netdb.h>
 #include <sys/types.h>
 #include <sys/uio.h>
@@ -67,6 +68,7 @@ extern autoscrumClient * autoscrumInit(uint16_t port)
   int socketfd = socket(PF_INET, SOCK_STREAM, 0);
 
   /* Bind and configure listener */
+  /* TODO: Change to be more verbose */
   if (bind(socketfd, (struct sockaddr *)&addr, sizeof(struct sockaddr_in)))
     throw(MODULE"Could not bind to port.", NULL);
   if (listen(socketfd, 10))

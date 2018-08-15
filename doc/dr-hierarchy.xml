@@ -475,8 +475,9 @@
 			<description>
 			  As part of the Task Resolution Interface, Autoscrum
 			  will support assignment of tasks to members of the
-			  Development Team, for the Project Owner. Developers
-			  may also request to be assigned a task.
+			  Development Team, for the Maintainer of the story
+			  mapped to the task. Developers may also request to be
+			  assigned a task.
 			</description>
 		      </dr>
 		      <dr tags="base-functionality">
@@ -515,7 +516,7 @@
 		    </title>
 		    <description>
 		      Tasks in Autoscrum may have dependencies on other
-		      tasks. This is because Stores, in Agile Scrum, may not
+		      tasks. This is because Stories, in Agile Scrum, may not
 		      have dependencies.
 		    </description>
 		  </dr>

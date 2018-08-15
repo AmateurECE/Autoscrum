@@ -7,11 +7,13 @@
 #
 # CREATED:	    06/07/2018
 #
-# LAST EDITED:	    06/07/2018
+# LAST EDITED:	    07/10/2018
 ###
 
 TGTS = \
-workflow
+workflow \
+server-arch \
+issues
 
 .PHONY: all clean force
 
