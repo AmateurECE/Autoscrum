@@ -7,7 +7,7 @@
  *
  * CREATED:	    08/12/2018
  *
- * LAST EDITED:	    08/12/2018
+ * LAST EDITED:	    08/13/2018
  ***/
 
 /******************************************************************************
@@ -27,7 +27,9 @@ struct ErrorString { int errno; char * string; };
 static struct ErrorString errorStrings[] = {
   {SCRUM_OK, ""},
   {SCRUM_ERROR, "error occurred in libscrum"},
-  {SCRUM_EUNKNOWN, "no error message available"}
+  {SCRUM_EUNKNOWN, "no error message available"},
+  {SCRUM_ENULLPTR, "this function cannot take NULL"},
+  {SCRUM_ESERIALIZER, ""}
 };
 
 static int errnoMax = sizeof(errorStrings);
@@ -56,6 +58,8 @@ char * ScrumExcept_strerror(ScrumContext * context)
   if (context->errno > errnoMax
       || context->errno != getErrorNumber(context->errno))
     return getErrorStringAddr(SCRUM_EUNKNOWN);
+  else if (context->errno == SCRUM_ESERIALIZER)
+    return context->errstr;
   else
     return getErrorStringAddr(context->errno);
 }

@@ -5,11 +5,15 @@
  *
  * DESCRIPTION:	    This file contains a few macros that are helpful for
  *		    handling exceptions.
- *		    TODO: Fill out list of exported (useful) symbols.
+ *
+ *		    NOTE TO DEVELOPERS: The Autoscrum convention is to set
+ *		    errno at the bottom of the call stack. A good rule of thumb
+ *		    is to not set errno if the function calls any other
+ *		    autoscrum function.
  *
  * CREATED:	    09/26/2017
  *
- * LAST EDITED:	    08/12/2018
+ * LAST EDITED:	    08/13/2018
  ***/
 
 #ifndef __ET_SCRUMEXCEPT__
@@ -25,9 +29,11 @@
  * API FUNCTION PROTOTYPES
  ***/
 
-#define SCRUM_OK	0
-#define SCRUM_ERROR	1
-#define SCRUM_EUNKNOWN	2
+#define SCRUM_OK	    0
+#define SCRUM_ERROR	    1
+#define SCRUM_EUNKNOWN	    2
+#define SCRUM_ENULLPTR	    3
+#define SCRUM_ESERIALIZER   4
 
 /******************************************************************************
  * API FUNCTION PROTOTYPES

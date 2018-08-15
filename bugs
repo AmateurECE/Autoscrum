@@ -3,19 +3,15 @@ test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: 
 source/RuntimeLibrary/Serializer/SerializerConfig.c: Determine if the file is on the local disk. | id:0c27cf09791800dfed6386a87c432d98865f4b67
 include/RuntimeLibrary/Serializer/StorySerializer.h: StorySerializer | id:0f452bc45a22d3a41f13fc1894de118abef71146
 include/RuntimeLibrary/Story.h: Add story points | id:118b9f512fd7f9bab975032b763ad710c91b6815
-test/mk/SerializerConfigTest.mk: clean | id:13be1e33baf5d3e2127ac93a41734c425264bea0
 source/RuntimeLibrary/Serializer/SerializerConfig.c: any SQLite3 write access must be wrapped | id:1daad4c871b0f8cdada322ffb80a17e33ccde01e
 doc/dr-hierarchy.xml: Update the backlog maintenance reqs --> | id:1eaac7223abde8c435a00061780bbcae3a49fb15
 source/Singly-Linked-List/list.c: Rework testing | id:281377d319b680372a1853a1ec63425b21d64d7e
 test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: read1Set | id:2bab9d26de886b4a3e6afb3f2e197a3a7cd7e9a3
-include/Except.h: Fill out list of exported (useful) symbols. | id:30e2c43a54c35850152431e7671e74cd7177d320
 test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: titleTooShort | id:338ca5d86191bf908dd834173e8b97a62c74a602
 Makefile: Replace this Make system with Automake. | id:358008242eac41e36379327177cbef5514cef8ae
 include/RuntimeLibrary/Serializer/TagTreeSerializer.h: TagTreeSerializer | id:40569fa6932feb2f68c2c9f4761d6b8dbdae279d
 include/RuntimeLibrary/Serializer/UserSerializer.h: UserSerializer | id:46292eebc4821426c613e71e7822628267627b13
-include/Except.h: These terminal ctl chars are not portable. Fix with ncurses. | id:57ced760fbc13449e06e15993c075c614b05f2b8
 include/RuntimeLibrary/CommentLog.h: libXML? | id:5aa2d7fb8c5889ae4f6890f7534a1282be3a203e
-source/RuntimeLibrary/Serializer/SerializerConfig.c: Update debug fprintfs to logging calls | id:5e52d47f66e70c78d1d8dfb69d893b12826106fa
 test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: read2Set | id:6c8aaaa330fd57aad22e844f591e96d13c631494
 include/RuntimeLibrary/TagTree.h: TagTree | id:6dea054f7ee51b0402b8cc28476e2716a4021311
 devClient/autoscrumServer.c: change makeCommand to use pascal-style strings | id:6e62d4eb7603ae8926da04711319be20aadc90a3

@@ -7,7 +7,7 @@
  *
  * CREATED:	    08/12/2018
  *
- * LAST EDITED:	    08/12/2018
+ * LAST EDITED:	    08/13/2018
  ***/
 
 /******************************************************************************
@@ -26,6 +26,7 @@
 static int testOk();
 static int testError();
 static int testEunknown();
+static int testEnullptr();
 
 /* Utilities */
 static int testErrorString(int errno, const char * str);
@@ -33,7 +34,8 @@ static int testErrorString(int errno, const char * str);
 TestHarness_tests(
 		  testOk,
 		  testError,
-		  testEunknown
+		  testEunknown,
+		  testEnullptr
 		  );
 
 /******************************************************************************
@@ -53,6 +55,11 @@ static int testError()
 static int testEunknown()
 {
   return testErrorString(SCRUM_EUNKNOWN, "no error message available");
+}
+
+static int testEnullptr()
+{
+  return testErrorSTring(SCRUM_ENULLPTR, "this function cannot take NULL");
 }
 
 /******************************************************************************

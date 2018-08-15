@@ -10,7 +10,7 @@
  *
  * CREATED:	    08/12/2018
  *
- * LAST EDITED:	    08/12/2018
+ * LAST EDITED:	    08/14/2018
  ***/
 
 #ifndef __ET_SCRUMCONTEXT__
@@ -20,23 +20,28 @@
  * INCLUDES
  ***/
 
-#include "RuntimeLibrary/Serializer/SerializerConfig.h"
+#include "RuntimeLibrary/Serializer/SerializerConfigStructdef.h"
 
 /******************************************************************************
  * TYPE DEFINITIONS
  ***/
 
-typedef struct {
+typedef struct _ScrumContext_ {
 
   /* Contains information about the last reported error in the library.
    * See ScrumExcept.h.
    */
-  int errno;
+  int err;
+
+  /* Contains a pointer to a human-readable error string. DO NOT USE THIS
+   * PARAMETER, it may be NULL at any point.
+   */
+  char * errstr;
 
   /* Contains information about the context of the Serializer. See
    * SerializerConfig.h.
    */
-  struct SerializerConfig * serConfig;
+  struct SerializerConfig cfg;
 
 } ScrumContext;
 
