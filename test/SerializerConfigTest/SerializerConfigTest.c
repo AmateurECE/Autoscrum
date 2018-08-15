@@ -8,7 +8,7 @@
  *
  * CREATED:	    08/04/2018
  *
- * LAST EDITED:	    08/12/2018
+ * LAST EDITED:	    08/14/2018
  ***/
 
 /******************************************************************************
@@ -22,7 +22,8 @@
 #include <unistd.h>
 
 #include "TestHarness.h"
-#include "CompileConfig.h"
+#include "RuntimeLibrary/ScrumContext.h"
+#include "RuntimeLibrary/ScrumExcept.h"
 #include "RuntimeLibrary/Serializer/SerializerConfig.h"
 
 /******************************************************************************
@@ -37,6 +38,7 @@ static int testInitNewDbNew();
 static int testInitNewDbExisting();
 static int testFreeNull();
 static int testFreeReal();
+static int testCtxErrStr();
 
 /* This macro satisfies the test harness */
 TestHarness_tests(
@@ -47,7 +49,8 @@ TestHarness_tests(
 		  testInitNewDbNew,
 		  testInitNewDbExisting,
 		  testFreeNull,
-		  testFreeReal
+		  testFreeReal,
+		  testCtxErrStr
 		  );
 
 /******************************************************************************
@@ -67,8 +70,8 @@ TestHarness_tests(
 static int testInitExistingDbNull()
 {
   /* Initialize the serializer with bunk parameters */
-  struct SerializerConfig cfg;
-  if (SerializerConfig_initExistingDb(&cfg, 0, NULL) == SCRUM_OK)
+  ScrumContext ctx;
+  if (SerializerConfig_initExistingDb(&ctx, 0, NULL) == SCRUM_OK)
     return FAILURE;
   return SUCCESS;
 }
@@ -84,7 +87,7 @@ static int testInitExistingDbNull()
  * RETURN:	    int -- SUCCESS if the test passes, FAILURE otherwise.
  ***/
 static int testInitExistingDbBunk() {
-  struct SerializerConfig cfg;
+  ScrumContext ctx;
 
   /* Note that this path works only if the test is run from the repo's root
    * directory.
@@ -92,7 +95,7 @@ static int testInitExistingDbBunk() {
   char path[] = "test/SerializerConfigTest/TestFile.txt";
   size_t pathLength = sizeof(path);
 
-  if (SerializerConfig_initExistingDb(&cfg, pathLength, path) == SCRUM_OK)
+  if (SerializerConfig_initExistingDb(&ctx, pathLength, path) == SCRUM_OK)
     return FAILURE;
   return SUCCESS;
 }
@@ -107,8 +110,9 @@ static int testInitExistingDbBunk() {
  *
  * RETURN:	    int -- SUCCESS if the test passes, FAILURE otherwise.
  ***/
-static int testInitExistingDbReal() {
-  struct SerializerConfig cfg;
+static int testInitExistingDbReal()
+{
+  ScrumContext ctx;
 
   /* Note that this path only works if the test is being run from the repo's
    * root directory.
@@ -117,14 +121,14 @@ static int testInitExistingDbReal() {
   size_t pathLength = sizeof(path);
 
   /* First, create the db. */
-  if (SerializerConfig_initNewDb(&cfg, pathLength, path) != SCRUM_OK)
+  if (SerializerConfig_initNewDb(&ctx, pathLength, path) != SCRUM_OK)
     return FAILURE;
-  SerializerConfig_free(&cfg);
+  SerializerConfig_free(&ctx);
 
   /* Then attempt to open it as an existing Db. */
-  if (SerializerConfig_initExistingDb(&cfg, pathLength, path) != SCRUM_OK)
+  if (SerializerConfig_initExistingDb(&ctx, pathLength, path) != SCRUM_OK)
     return FAILURE;
-  SerializerConfig_free(&cfg);
+  SerializerConfig_free(&ctx);
   return SUCCESS;
 }
 
@@ -157,13 +161,13 @@ static int testInitNewDbNull()
  ***/
 static int testInitNewDbNew()
 {
-  struct SerializerConfig cfg;
+  ScrumContext ctx;
 
   char path[] = "test/SerializerConfigTest/testInitNewDbNewTestFile.db";
   size_t pathLength = sizeof(path);
-  if (SerializerConfig_initNewDb(&cfg, pathLength, path) != SCRUM_OK)
+  if (SerializerConfig_initNewDb(&ctx, pathLength, path) != SCRUM_OK)
     return FAILURE;
-  SerializerConfig_free(&cfg);
+  SerializerConfig_free(&ctx);
 
   /* This should be a new file every time we run this test */
   if (unlink(path) < 0)
@@ -184,14 +188,14 @@ static int testInitNewDbNew()
  ***/
 static int testInitNewDbExisting()
 {
-  struct SerializerConfig cfg;
+  ScrumContext ctx;
   char path[] = "test/SerializerConfigTest/testInitNewDbNewTestFile.db";
   size_t pathLength = sizeof(path);
 
   /* First, create the db. */
-  if (SerializerConfig_initNewDb(&cfg, pathLength, path) != SCRUM_OK)
+  if (SerializerConfig_initNewDb(&ctx, pathLength, path) != SCRUM_OK)
     return FAILURE;
-  SerializerConfig_free(&cfg);
+  SerializerConfig_free(&ctx);
   /* Get the time of creation */
   struct stat fileStats;
   if (stat(path, &fileStats))
@@ -199,11 +203,11 @@ static int testInitNewDbExisting()
   time_t orig = fileStats.st_mtimespec.tv_sec;
 
   /* Call again */
-  if (SerializerConfig_initNewDb(&cfg, pathLength, path) != SCRUM_OK)
+  if (SerializerConfig_initNewDb(&ctx, pathLength, path) != SCRUM_OK)
     return FAILURE;
   if (stat(path, &fileStats))
     return FAILURE;
-  SerializerConfig_free(&cfg);
+  SerializerConfig_free(&ctx);
 
   /* Make sure the times are different */
   if (fileStats.st_mtimespec.tv_sec ^ orig)
@@ -239,16 +243,50 @@ static int testFreeNull()
  ***/
 static int testFreeReal()
 {
-  struct SerializerConfig cfg;
+  ScrumContext ctx;
   char path[] = "test/SerializerConfigTest/testInitNewDbNewTestFile.db";
   size_t pathLength = sizeof(path);
-  if (SerializerConfig_initNewDb(&cfg, pathLength, path) != SCRUM_OK)
+  if (SerializerConfig_initNewDb(&ctx, pathLength, path) != SCRUM_OK)
     return FAILURE;
 
-  if (SerializerConfig_free(&cfg) != SCRUM_OK)
+  if (SerializerConfig_free(&ctx) != SCRUM_OK)
     return FAILURE;
 
   return SUCCESS;
+}
+
+/******************************************************************************
+ * FUNCTION:	    testCtxErrStr
+ *
+ * DESCRIPTION:	    The Serializer module is required to implement some kind of
+ *		    system to provide error messages when something bad
+ *		    happens. Generally, this means setting errno to
+ *		    SCRUM_ESERIALIZER and populating ScrumContext.errstr with a
+ *		    pointer to a static string. This test does not test for
+ *		    value, only non-NULL-ness. To do this, we perform the same
+ *		    procedure as in initExistingDbBunk
+ *
+ * ARGUMENTS:	    none.
+ *
+ * RETURN:	    int.
+ ***/
+static int testCtxErrStr()
+{
+  ScrumContext ctx;
+
+  /* Note that this path works only if the test is run from the repo's root
+   * directory.
+   */
+  char path[] = "test/SerializerConfigTest/TestFile.txt";
+  size_t pathLength = sizeof(path);
+
+  SerializerConfig_initExistingDb(&ctx, pathLength, path);
+
+  if (ctx.err != SCRUM_ESERIALIZER)
+    return FAILURE;
+  if (ctx.errstr == NULL)
+    return FAILURE;
+  return SUCCESS;  
 }
 
 /*****************************************************************************/

@@ -8,7 +8,7 @@
  *
  * CREATED:	    08/04/2018
  *
- * LAST EDITED:	    08/12/2018
+ * LAST EDITED:	    08/14/2018
  ***/
 
 /******************************************************************************
@@ -27,7 +27,8 @@
 #include <sqlite3.h>
 
 /* Autoscrum Headers */
-#include "CompileConfig.h"
+#include "RuntimeLibrary/ScrumContext.h"
+#include "RuntimeLibrary/ScrumExcept.h"
 #include "RuntimeLibrary/Serializer/SerializerConfig.h"
 
 /******************************************************************************
@@ -43,12 +44,19 @@
 #endif
 
 /******************************************************************************
+ * STATIC CONST DATA
+ ***/
+
+static char errStrBuff[64];
+
+/******************************************************************************
  * STATIC FUNCTION PROTOTYPES
  ***/
 
-static int openDatabase(struct SerializerConfig * cfg,
+static int openDatabase(ScrumContext * cfg,
 			size_t pathLength, char * path);
 static int tableExists(void *, int, char **, char **);
+static void translateErrorStr(ScrumContext * ctx);
 
 /******************************************************************************
  * API FUNCTIONS
@@ -61,26 +69,24 @@ static int tableExists(void *, int, char **, char **);
  *		    data passed. This function is used when `path' points to an
  *		    existing Autoscrum database.
  *
- * ARGUMENTS:	    cfg: (struct SerializerConfig *) The config object.
+ * ARGUMENTS:	    ctx: The current Autoscrum context.
  *		    pathLength: (size_t) The length of the string at `path'.
  *		    path: (char *) The location of the file on disk.
  *
  * RETURN:	    int -- SCRUM_OK on success, SCRUM_ERROR otherwise.
  ***/
-int SerializerConfig_initExistingDb(struct SerializerConfig * cfg,
-				    size_t pathLength, char * path)
+int SerializerConfig_initExistingDb(ScrumContext * ctx, size_t pathLength,
+				    char * path)
 {
-  if (openDatabase(cfg, pathLength, path) != SCRUM_OK)
+  if (openDatabase(ctx, pathLength, path) != SCRUM_OK)
     return SCRUM_ERROR;
-
-  /* TODO: Update debug fprintfs to logging calls */
 
   const char * query = "SELECT name FROM sqlite_master WHERE type='table' "
     "AND name='"AUTOSCRUM_DB_TABLE"';";
   int exists = 0;
   char * error = NULL;
-  if (sqlite3_exec(cfg->pDatabase, query, tableExists, (void *)&exists, &error)
-      != SQLITE_OK) {
+  if (sqlite3_exec(ctx->cfg.pDatabase, query, tableExists, (void *)&exists,
+		   &error) != SQLITE_OK) {
 #if (SERIALIZERCONFIG_DEBUG)
     if (error != NULL) {
       fprintf(stderr, "%s:%d:%s\n", __func__, __LINE__, error);
@@ -103,7 +109,8 @@ int SerializerConfig_initExistingDb(struct SerializerConfig * cfg,
   return SCRUM_OK;
 
  exception:
-  SerializerConfig_free(cfg);
+  translateErrorStr(ctx);
+  SerializerConfig_free(ctx);
   return SCRUM_ERROR;
 }
 
@@ -113,15 +120,18 @@ int SerializerConfig_initExistingDb(struct SerializerConfig * cfg,
  * DESCRIPTION:	    Initializes `cfg' with the remaining data passed to it.
  *		    This function creates a new Autoscrum database at `path.'
  *
- * ARGUMENTS:	    cfg: (struct SerializerConfig *) The config object.
+ * ARGUMENTS:	    ctx: The current Autoscrum context.
  *		    pathLength: (size_t) The length of the string at `path'.
  *		    path: (char *) Location to create the new DB file.
  *
  * RETURN:	    SCRUM_OK | SCRUM_ERROR
  ***/
-int SerializerConfig_initNewDb(struct SerializerConfig * cfg,
-			       size_t pathLength, char * path)
+int SerializerConfig_initNewDb(ScrumContext * ctx, size_t pathLength,
+			       char * path)
 {
+  if (ctx == NULL)
+    return SCRUM_ERROR;
+
   /* If the file doesn't exist, create it. If it does exist, clear it. */
   int newFd = -1;
   if ((newFd = open(path, O_CREAT | O_TRUNC,
@@ -131,29 +141,27 @@ int SerializerConfig_initNewDb(struct SerializerConfig * cfg,
     fprintf(stderr, "%s:%d:(%d) %s\n", __func__, __LINE__, errno,
 	    strerror(errno));
 #endif
-    return SCRUM_ERROR;    
+    ctx->errstr = strerror(errno);
+    ctx->err = SCRUM_ESERIALIZER;
+    return SCRUM_ERROR;
   }
 
-  if (openDatabase(cfg, pathLength, path) != SCRUM_OK)
+  if (openDatabase(ctx, pathLength, path) != SCRUM_OK)
     return SCRUM_ERROR;
 
   /* TODO: Ensure we create the file so that only we can read it. */
 
   const char * query = "CREATE TABLE "AUTOSCRUM_DB_TABLE"("
     AUTOSCRUM_DB_FIELD")";
-  char * error = NULL;
-  if (sqlite3_exec(cfg->pDatabase, query, NULL, NULL, &error)
+  if (sqlite3_exec(ctx->cfg.pDatabase, query, NULL, NULL, NULL)
       != SQLITE_OK) {
 #if (SERIALIZERCONFIG_DEBUG)
-    if (error != NULL) {
-      fprintf(stderr, "%s:%d:%s\n", __func__, __LINE__, error);
-      sqlite3_free(error);
-    } else {
-      fprintf(stderr, "Could not create the Autoscrum table.\n");
-    }
+    fprintf(stderr, "%s:%d:%s\n", __func__, __LINE__,
+	    sqlite3_errmsg(ctx->cfg->pDatabase));
 #endif
     /* Close the database and return an error */
-    SerializerConfig_free(cfg);
+    translateErrorStr(ctx);
+    SerializerConfig_free(ctx);
     return SCRUM_ERROR;
   }
 
@@ -170,21 +178,22 @@ int SerializerConfig_initNewDb(struct SerializerConfig * cfg,
  *		    management of the caller's data. This function (in its
  *		    current implementation) simply closes the database ptr.
  *
- * ARGUMENTS:	    cfg: (struct SerializerConfig *) The object to remove.
+ * ARGUMENTS:	    ctx: The current scrum context.
  *
  * RETURN:	    SCRUM_OK, or SCRUM_ERROR if a failure occurred.
  ***/
-int SerializerConfig_free(struct SerializerConfig * cfg)
+int SerializerConfig_free(ScrumContext * ctx)
 {
-  if (cfg == NULL)
+  if (ctx == NULL)
     return SCRUM_ERROR;
 
   /* Close the database */
-  int ret = sqlite3_close(cfg->pDatabase);
+  int ret = sqlite3_close(ctx->cfg.pDatabase);
   if (ret != SQLITE_OK) {
 #if (SERIALIZERCONFIG_DEBUG)
     fprintf(stderr, "%s:%d:%s\n", __func__, __LINE__, sqlite3_errstr(ret));
 #endif
+    translateErrorStr(ctx);
     return SCRUM_ERROR;
   }
 
@@ -231,16 +240,15 @@ static int tableExists(void * exists, int numCols, char ** colText,
  * DESCRIPTION:	    This function opens the database file specified by `path',
  *		    returning the corresponding error code.
  *
- * ARGUMENTS:	    cfg: (struct SerializerConfig *) The config object.
+ * ARGUMENTS:	    ctx: The current Scrum context.
  *		    pathLength: (size_t) The length of the string at `path'.
  *		    path: (char *) Location to create the new DB file.
  *
  * RETURN:	    SCRUM_OK | SCRUM_ERROR
  ***/
-static int openDatabase(struct SerializerConfig * cfg,
-			size_t pathLength, char * path)
+static int openDatabase(ScrumContext * ctx, size_t pathLength, char * path)
 {
-  if (cfg == NULL || path == NULL)
+  if (ctx == NULL || path == NULL)
     return SCRUM_ERROR;
 
   /* TODO: Determine if the file is on the local disk. */
@@ -264,17 +272,52 @@ static int openDatabase(struct SerializerConfig * cfg,
    */
 
   /* Open the database */
-  int ret = sqlite3_open(path, &(cfg->pDatabase));
+  int ret = sqlite3_open(path, &(ctx->cfg.pDatabase));
   if (ret != SQLITE_OK) {
 #if (SERIALIZERCONFIG_DEBUG)
     fprintf(stderr, "%s:%d:%s\n", __func__, __LINE__, sqlite3_errstr(ret));
 #endif
+    translateErrorStr(ctx);
     return SCRUM_ERROR;
   }
 
-  cfg->path = path;
-  cfg->pathLength = pathLength;
+  ctx->cfg.path = path;
+  ctx->cfg.pathLength = pathLength;
   return SCRUM_OK;  
+}
+
+/******************************************************************************
+ * FUNCTION:	    translateErrorStr
+ *
+ * DESCRIPTION:	    SQLite has its own system for error reporting. However,
+ *		    Autoscrum prefers to pass around pointers to static const
+ *		    strings. This function translates from one domain to the
+ *		    other.
+ *
+ * ARGUMENTS:	    ctx: The current Autoscrum Context.
+ *
+ * RETURN:	    void. However, we set ctx->err and potentially
+ *		    ctx->errstr
+ ***/
+static void translateErrorStr(ScrumContext * ctx)
+{
+  if (ctx == NULL)
+    return;
+
+  /* Get string */
+  memset(errStrBuff, 0, sizeof(errStrBuff));
+  const char * errStr = sqlite3_errmsg(ctx->cfg.pDatabase);
+  if (errStr == NULL) {
+    ctx->err = SCRUM_ERROR;
+    return;
+  }
+
+  /* Copy string to errStrBuff */
+  (void)strncpy(errStrBuff, errStr, 63);
+
+  /* Tidy up */
+  ctx->err = SCRUM_ESERIALIZER;
+  ctx->errstr = errStrBuff;
 }
 
 /*****************************************************************************/

@@ -7,7 +7,7 @@
 #
 # CREATED:	    08/04/2018
 #
-# LAST EDITED:	    08/12/2018
+# LAST EDITED:	    08/14/2018
 ###
 
 MODULE:=SerializerConfig
@@ -18,7 +18,7 @@ test/TestHarness.o \
 source/RuntimeLibrary/Serializer/$(MODULE).o
 
 #: Run the test, then clean.
-all: $(MODULE)Test # TODO: $(MODULE)clean
+all: $(MODULE)Test $(MODULE)clean
 
 #: Run the test.
 $(MODULE)Test: test/$(MODULE)Test/$(MODULE)Test

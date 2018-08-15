@@ -9,11 +9,20 @@
  *
  * CREATED:	    08/04/2018
  *
- * LAST EDITED:	    08/07/2018
+ * LAST EDITED:	    08/14/2018
  ***/
 
 #ifndef __ET_SERIALIZERCONFIG__
 #define __ET_SERIALIZERCONFIG__
+
+/******************************************************************************
+ * INCLUDES
+ ***/
+
+#include <sqlite3.h>
+
+#include "SerializerConfigStructdef.h"
+#include "RuntimeLibrary/ScrumContext.h"
 
 /******************************************************************************
  * MACRO DEFINITIONS
@@ -30,42 +39,26 @@
 #define AUTOSCRUM_DB_FIELD "id int"
 
 /******************************************************************************
- * TYPE DEFINITIONS
- ***/
-
-struct SerializerConfig {
-
-  /* This serializer implementation uses SQLite3 to manage the server data. */
-  sqlite3 * pDatabase;
-
-  /* This is the path location of the database file on disk, and its
-   * corresponding string length in bytes.
-   */
-  char * path;
-  size_t pathLength;
-};
-
-/******************************************************************************
  * API FUNCTION PROTOTYPES
  ***/
 
 /* Initializes `cfg' with the remaining data passed to it. This function is
  * used when `path' points to an existing Autoscrum database.
  */
-int SerializerConfig_initExistingDb(struct SerializerConfig * cfg,
-				    size_t pathLength, char * path);
+extern int SerializerConfig_initExistingDb(ScrumContext * cfg,
+					   size_t pathLength, char * path);
 
 /* Initializes `cfg' with the remaining data passed to it. This function
  * creates a new Autoscrum database at `path.'
  */
-int SerializerConfig_initNewDb(struct SerializerConfig * cfg,
-			       size_t pathLength, char * path);
+extern int SerializerConfig_initNewDb(ScrumContext * cfg,
+				      size_t pathLength, char * path);
 
 /* Closes all resources contained by the Serializer. Any subsequent calls to
  * the Serializer functions will result in error return codes and no action
  * taken.
  */
-int SerializerConfig_free(struct SerializerConfig * cfg);
+extern int SerializerConfig_free(ScrumContext * cfg);
 
 #endif /* __ET_SERIALIZERCONFIG__ */
 
