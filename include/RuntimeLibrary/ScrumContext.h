@@ -10,7 +10,7 @@
  *
  * CREATED:	    08/12/2018
  *
- * LAST EDITED:	    08/14/2018
+ * LAST EDITED:	    08/21/2018
  ***/
 
 #ifndef __ET_SCRUMCONTEXT__
@@ -26,7 +26,7 @@
  * TYPE DEFINITIONS
  ***/
 
-typedef struct _ScrumContext_ {
+typedef struct {
 
   /* Contains information about the last reported error in the library.
    * See ScrumExcept.h.

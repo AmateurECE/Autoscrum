@@ -9,11 +9,18 @@
  *
  * CREATED:	    08/14/2018
  *
- * LAST EDITED:	    08/14/2018
+ * LAST EDITED:	    08/18/2018
  ***/
 
 #ifndef __ET_SERIALIZERCONFIGSTRUCTDEF__
 #define __ET_SERIALIZERCONFIGSTRUCTDEF__
+
+/******************************************************************************
+ * INCLUDES
+ ***/
+
+#include <sqlite3.h>
+#include <stddef.h>
 
 /******************************************************************************
  * TYPE DEFINITIONS

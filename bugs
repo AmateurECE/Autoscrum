@@ -1,38 +1,34 @@
 include/RuntimeLibrary/Serializer/CommentLogSerializer.h: CommentLogSerializer | id:01157de327762863e83d9e0c3baf1e3beb4ffcdd
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: titleTooLong | id:03a0f318fd6833c09219747e1e415b99193d8173
 source/RuntimeLibrary/Serializer/SerializerConfig.c: Determine if the file is on the local disk. | id:0c27cf09791800dfed6386a87c432d98865f4b67
-include/RuntimeLibrary/Serializer/StorySerializer.h: StorySerializer | id:0f452bc45a22d3a41f13fc1894de118abef71146
-include/RuntimeLibrary/Story.h: Add story points | id:118b9f512fd7f9bab975032b763ad710c91b6815
+include/RuntimeLibrary/Epic.h: Uncomment fields in Epic | id:175bcd57c77330e6e56971dc1ecfcd2f5c72db93
 source/RuntimeLibrary/Serializer/SerializerConfig.c: any SQLite3 write access must be wrapped | id:1daad4c871b0f8cdada322ffb80a17e33ccde01e
 doc/dr-hierarchy.xml: Update the backlog maintenance reqs --> | id:1eaac7223abde8c435a00061780bbcae3a49fb15
 source/Singly-Linked-List/list.c: Rework testing | id:281377d319b680372a1853a1ec63425b21d64d7e
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: read1Set | id:2bab9d26de886b4a3e6afb3f2e197a3a7cd7e9a3
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: titleTooShort | id:338ca5d86191bf908dd834173e8b97a62c74a602
 Makefile: Replace this Make system with Automake. | id:358008242eac41e36379327177cbef5514cef8ae
+test/mk/ProjectSerializerTest.mk: Remove these flags | id:374c866e3e1f8cf9bb28caaf928b5aa3e61e72aa
 include/RuntimeLibrary/Serializer/TagTreeSerializer.h: TagTreeSerializer | id:40569fa6932feb2f68c2c9f4761d6b8dbdae279d
 include/RuntimeLibrary/Serializer/UserSerializer.h: UserSerializer | id:46292eebc4821426c613e71e7822628267627b13
+include/RuntimeLibrary/Project.h: What's the purpose of the groups? | id:5338228ff713595ac72f36660b170586da98b10c
 include/RuntimeLibrary/CommentLog.h: libXML? | id:5aa2d7fb8c5889ae4f6890f7534a1282be3a203e
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: read2Set | id:6c8aaaa330fd57aad22e844f591e96d13c631494
+include/RuntimeLibrary/Project.h: What's the purpose of the users? | id:5d9a0a71c60de65cfc8c8544224d6279fbed8f84
 include/RuntimeLibrary/TagTree.h: TagTree | id:6dea054f7ee51b0402b8cc28476e2716a4021311
 devClient/autoscrumServer.c: change makeCommand to use pascal-style strings | id:6e62d4eb7603ae8926da04711319be20aadc90a3
+source/RuntimeLibrary/Serializer/ScrumObjectIdentifierSerializer.c: Use v2 calls in SQLite3. | id:7461d3beb2135aadeaff59b349b01314cee66a72
 include/RuntimeLibrary/Serializer/StatusSerializer.h: StatusSerializer | id:7e1a713293703ed6393da38a9628a2a6867602fd
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: largeId | id:8604354e8896bd07ca947473210263efd19756f0
 include/RuntimeLibrary/Serializer/IssueSerializer.h: IssueSerializer | id:9aed8c4c07305ee74ef00de7b5d80a1a5bdce95e
+include/RuntimeLibrary/Story.h: Add story points *\/ | id:a381a94070e6f9bc33828135b5c4427c34dd0423
 source/RuntimeLibrary/Serializer/SerializerConfig.c: Ensure we create the file so that only we can read it. | id:a51fbffa2845ecbfac6097d7fc0f6bc17d1a47ea
 include/RuntimeLibrary/CommentLog.h: CommentLog_remove Parameters | id:ac7426cc63bef4ecb53c0cb9cd62d75610d7db4d
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: pathTooShort | id:b480b4de23f1f691a3426c1eb1dfd2fe0b931b16
 README.md: Finish the Workflow section | id:b67adb338ca6b7b30aa736a8f2cfba9d301372d4
 include/RuntimeLibrary/Serializer/BacklogSerializer.h: BacklogSerializer.h | id:c2bd3628cf77acc3213b9cce3388bfa29aa03c3f
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: pathTooLong | id:cf6bdcaac336df2c7edd476ba3414cf38040ddcc
+include/RuntimeLibrary/Task.h: Uncomment fields in Task | id:c815e5c529474ecd72e96a74f22511be8031444c
 include/RuntimeLibrary/Serializer/TaskSerializer.h: TaskSerializer | id:d0540eac9f32efa3d27d6b9d6824797baef2912a
-include/RuntimeLibrary/Project.h: What about Project config? | id:d233e705e0861db3e3887a4eaabf45dc1a067d87
 include/RuntimeLibrary/CommentLog.h: Add time member | id:da6454b43c1c63a0c57d599befca96bff2d1c937
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: write2Set | id:db7e7bb5a1a87506655d7861a091a8a77457f126
 include/RuntimeLibrary/Task.h: Task_destroy() | id:e25b4dcd3cf00285d41977a0c95c6887af12ded2
 source/serve/autoscrumClient.c: Change to be more verbose | id:e41b5cb26f77f0c3609ea51c46667210f69da761
-test/ScrumObjectIdentifierSerializerTest/ScrumObjectIdentifierSerializerTest.c: Change this to SUCCESS | id:ec8934ddd80ab9edb5cca439b533705d0b0e882d
 include/RuntimeLibrary/Serializer/SprintSerializer.h: SprintSerializer | id:edfe6187bc33a6078ec7227c3f5f865ca5b29c92
-include/RuntimeLibrary/Serializer/ProjectSerializer.h: ProjectSerializer | id:f1efde308e3381ebaa2d6221cfd615a31753256f
 include/RuntimeLibrary/Task.h: Task_create() | id:f4cbe4c9ae1c901ab3e3371e9c39b6ddbd79c0b6
 include/RuntimeLibrary/Serializer/EpicSerializer.h: Epic Serializer | id:f8f3b91c07462891071334512ee27b1cae4a55b2
 source/RuntimeLibrary/Serializer/SerializerConfig.c: Start SQLite3 in Serialize mode here | id:fbd59079aae5093c2303b7b2da203b5b6d201604
+source/RuntimeLibrary/Serializer/ScrumObjectIdentifierSerializer.c: Determine if initNewDb is necessary | id:fc7c22974de8d9403ab55ee9dc3f61ef412dd54f
+source/RuntimeLibrary/Serializer/ScrumObjectIdentifierSerializer.c: VARCHAR(max), not TEXT | id:fd59bab6f68f95f7d8f62f965743f8e24899e336

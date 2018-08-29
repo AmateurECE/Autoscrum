@@ -7,7 +7,7 @@
  *
  * CREATED:	    08/12/2018
  *
- * LAST EDITED:	    08/13/2018
+ * LAST EDITED:	    08/21/2018
  ***/
 
 /******************************************************************************
@@ -22,7 +22,7 @@
  * STATIC DATA
  ***/
 
-struct ErrorString { int errno; char * string; };
+struct ErrorString { int err; char * string; };
 
 static struct ErrorString errorStrings[] = {
   {SCRUM_OK, ""},
@@ -32,10 +32,10 @@ static struct ErrorString errorStrings[] = {
   {SCRUM_ESERIALIZER, ""}
 };
 
-static int errnoMax = sizeof(errorStrings);
+static int errMax = sizeof(errorStrings);
 
 #define getErrorStringAddr(n)	errorStrings[(n)].string
-#define getErrorNumber(n)	errorStrings[(n)].errno
+#define getErrorNumber(n)	errorStrings[(n)].err
 
 /******************************************************************************
  * API FUNCTIONS
@@ -55,13 +55,13 @@ char * ScrumExcept_strerror(ScrumContext * context)
   if (context == NULL)
     return NULL;
 
-  if (context->errno > errnoMax
-      || context->errno != getErrorNumber(context->errno))
+  if (context->err > errMax
+      || context->err != getErrorNumber(context->err))
     return getErrorStringAddr(SCRUM_EUNKNOWN);
-  else if (context->errno == SCRUM_ESERIALIZER)
+  else if (context->err == SCRUM_ESERIALIZER)
     return context->errstr;
   else
-    return getErrorStringAddr(context->errno);
+    return getErrorStringAddr(context->err);
 }
 
 /*****************************************************************************/
