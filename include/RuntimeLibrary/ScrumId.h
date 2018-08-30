@@ -1,5 +1,5 @@
 /******************************************************************************
- * NAME:	    ScrumObjectIdentifier.h
+ * NAME:	    ScrumId.h
  *
  * AUTHOR:	    Ethan D. Twardy <edtwardy@mtu.edu>
  *
@@ -32,7 +32,7 @@ typedef struct {
   char * path;
   char * title;
 
-} ScrumObjectIdentifier;
+} ScrumId;
 
 #endif /* __ET_SCRUMOBJECTIDENTIFIER__ */
 

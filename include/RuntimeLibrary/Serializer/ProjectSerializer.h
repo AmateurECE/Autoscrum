@@ -46,11 +46,11 @@ extern int Project_writePath(ScrumContext * ctx, Project * p);
  */
 extern int Project_readNumberOfProjects(ScrumContext * ctx, size_t * n);
 
-/* Read the ScrumObjectIdentifiers of all projects in the database into the
+/* Read the ScrumIds of all projects in the database into the
  * array pointed to by `projects'.
  */
 extern int Project_readAllProjectIds(ScrumContext * ctx, size_t n,
-				     ScrumObjectIdentifier projects[n]);
+				     ScrumId projects[n]);
 
 #endif /* __ET_PROJECTSERIALIZER__ */
 

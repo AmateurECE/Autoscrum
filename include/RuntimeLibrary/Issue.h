@@ -18,7 +18,7 @@
  * INCLUDES
  ***/
 
-/* #include "ScrumObjectIdentifier.h" */
+/* #include "ScrumId.h" */
 /* #include "CommentLog.h" */
 /* #include "Status.h" */
 
@@ -29,7 +29,7 @@
 typedef struct {
 
   /* /\* Standard Scrum Object data *\/ */
-  /* ScrumObjectIdentifier id; */
+  /* ScrumId id; */
 
   /* /\* User who reported the issue *\/ */
   /* User reporter; */

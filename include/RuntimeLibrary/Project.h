@@ -19,7 +19,7 @@
 
 #include <stddef.h>
 
-#include "ScrumObjectIdentifier.h"
+#include "ScrumId.h"
 #include "TagHeap.h"
 #include "EventLog.h"
 #include "ScrumUser.h"
@@ -32,7 +32,7 @@
 typedef struct {
 
   /* Standard Scrum Object data */
-  ScrumObjectIdentifier id;
+  ScrumId id;
 
   /* An array of ScrumUser objects.
    * TODO: What's the purpose of the users?
@@ -57,15 +57,15 @@ typedef struct {
    */
   ScrumEventLog eventLog;
 
-  /* The ScrumObjectIdentifiers of each of this project's epics. */
-  ScrumObjectIdentifier * epics;
+  /* The ScrumIds of each of this project's epics. */
+  ScrumId * epics;
   size_t numEpics;
 
   /* The currently active sprint. */
-  ScrumObjectIdentifier activeSprint;
+  ScrumId activeSprint;
 
   /* The project backlog. */
-  ScrumObjectIdentifier projectBacklog;
+  ScrumId projectBacklog;
 
 } Project;
 

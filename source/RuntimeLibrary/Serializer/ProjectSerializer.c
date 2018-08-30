@@ -16,7 +16,7 @@
 
 #include <stddef.h>
 
-#include "RuntimeLibrary/ScrumObjectIdentifier.h"
+#include "RuntimeLibrary/ScrumId.h"
 #include "RuntimeLibrary/Project.h"
 #include "RuntimeLibrary/Serializer/ProjectSerializer.h"
 #include "RuntimeLibrary/ScrumContext.h"
@@ -118,7 +118,7 @@ int Project_readNumberOfProjects(ScrumContext * ctx, size_t * n)
 /******************************************************************************
  * FUNCTION:	    Project_readAllProjectIds
  *
- * DESCRIPTION:	    Read the ScrumObjectIdentifiers of all projects in the
+ * DESCRIPTION:	    Read the ScrumIds of all projects in the
  *		    database into the array pointed to by `projects'.
  *
  * ARGUMENTS:	    n: The size of the array `projects'.
@@ -128,6 +128,6 @@ int Project_readNumberOfProjects(ScrumContext * ctx, size_t * n)
  * RETURN:	    int -- SCRUM_OK if no errors occurred.
  ***/
 int Project_readAllProjectIds(ScrumContext * ctx, size_t n,
-			      ScrumObjectIdentifier projects[n]);
+			      ScrumId projects[n]);
 
 /*****************************************************************************/

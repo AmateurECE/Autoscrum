@@ -17,7 +17,7 @@
  * INCLUDES
  ***/
 
-/* #include "ScrumObjectIdentifier.h" */
+/* #include "ScrumId.h" */
 /* #include "User.h" */
 /* #include "Status.h" */
 
@@ -30,7 +30,7 @@ typedef struct {
   /* TODO: Uncomment fields in Task */
 
   /* /\* Standard Scrum Object data *\/ */
-  /* ScrumObjectIdentifier id; */
+  /* ScrumId id; */
 
   /* /\* User who oversees resolution of the task *\/ */
   /* User maintainer; */

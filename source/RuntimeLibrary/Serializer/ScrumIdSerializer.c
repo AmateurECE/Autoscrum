@@ -1,9 +1,9 @@
 /******************************************************************************
- * NAME:	    ScrumObjectIdentifierSerializer.c
+ * NAME:	    ScrumIdSerializer.c
  *
  * AUTHOR:	    Ethan D. Twardy <edtwardy@mtu.edu>
  *
- * DESCRIPTION:	    Serializes ScrumObjectIdentifier objects.
+ * DESCRIPTION:	    Serializes ScrumId objects.
  *
  * CREATED:	    08/16/2018
  *

@@ -1,5 +1,5 @@
 /******************************************************************************
- * NAME:	    ScrumObjectIdentifierSerializer.h
+ * NAME:	    ScrumIdSerializer.h
  *
  * AUTHOR:	    Ethan D. Twardy <edtwardy@mtu.edu>
  *
@@ -31,16 +31,16 @@
  ***/
 
 /* This function assumes nothing of the state of the memory of `id'. */
-int ScrumObjectIdentifier_writeId(ScrumObjectIdentifier * id);
+int ScrumId_writeId(ScrumId * id);
 
 /* Before calling this function, id->id should be set. If it is not, this fn
  * will immediately return non-zero (error).
  */
-int ScrumObjectIdentifier_readId(ScrumObjectIdentifier * id);
+int ScrumId_readId(ScrumId * id);
 
-int ScrumObjectIdentifier_writePath(ScrumObjectIdentifier * path);
+int ScrumId_writePath(ScrumId * path);
 
-int ScrumObjectIdentifier_readPath(ScrumObjectIdentifier * path);
+int ScrumId_readPath(ScrumId * path);
 
 #endif /* __ET_SCRUMOBJECTIDENTIFIERSERIALIZER__ */
 

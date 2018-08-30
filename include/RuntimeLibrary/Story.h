@@ -31,7 +31,7 @@
 typedef struct {
 
   /* /\* Standard Scrum Object data *\/ */
-  /* ScrumObjectIdentifier id; */
+  /* ScrumId id; */
 
   /* /\* The Backlog which this story is queued to *\/ */
   /* Backlog * backlog; */

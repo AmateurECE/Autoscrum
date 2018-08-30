@@ -17,7 +17,7 @@
  * INCLUDES
  ***/
 
-/* #include "ScrumObjectIdentifier.h" */
+/* #include "ScrumId.h" */
 /* #include "Story.h" */
 
 /******************************************************************************
@@ -29,7 +29,7 @@ typedef struct {
   /* TODO: Uncomment fields in Epic */
 
   /* /\* Standard Scrum Object data *\/ */
-  /* ScrumObjectIdentifier id; */
+  /* ScrumId id; */
 
   /* /\* Stories. Pointer to an array of stories which are contained */
   /*  * herein. */
