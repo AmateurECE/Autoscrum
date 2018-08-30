@@ -7,7 +7,7 @@
  *
  * CREATED:	    08/12/2018
  *
- * LAST EDITED:	    08/13/2018
+ * LAST EDITED:	    08/30/2018
  ***/
 
 /******************************************************************************
@@ -59,7 +59,7 @@ static int testEunknown()
 
 static int testEnullptr()
 {
-  return testErrorSTring(SCRUM_ENULLPTR, "this function cannot take NULL");
+  return testErrorString(SCRUM_ENULLPTR, "this function cannot take NULL");
 }
 
 /******************************************************************************
@@ -72,10 +72,10 @@ static int testEnullptr()
  *
  * RETURN:	    SUCCESS | FAILURE
  ***/
-static int testErrorString(int errno, const char * compStr)
+static int testErrorString(int err, const char * compStr)
 {
   ScrumContext context;
-  context.errno = errno;
+  context.err = err;
 
   char * str = ScrumExcept_strerror(&context);
   if (str == NULL)

@@ -8,18 +8,19 @@
 #
 # CREATED:	    07/01/2018
 #
-# LAST EDITED:	    08/23/2018
+# LAST EDITED:	    08/30/2018
 ###
 # TODO: Replace this Make system with Automake.
 
 CONFIG_DEV=1
 
 export CFLAGS:=-g -Wall -O0 -Wextra -I./include
-# devClient/client: CFLAGS += -I./devClient/include -D CONFIG_DEFAULT_PORT=8082
-source/RuntimeLibrary/libscrum.a: CFLAGS += -fPIC
-export LDFLAGS:=`pkg-config --libs sqlite3` -shared
+export LDFLAGS:=`pkg-config --libs sqlite3`
 export CC:=gcc
+# devClient/client: CFLAGS += -I./devClient/include -D CONFIG_DEFAULT_PORT=8082
 # export BINARIES=devClient/client source/serve/autoscrum
+source/RuntimeLibrary/libscrum.a: CFLAGS += -fPIC
+source/RuntimeLibrary/libscrum.a: LDFLAGS += -shared
 
 # # This Makefile sets the obj-c list
 # include devClient/Makefile
@@ -69,8 +70,6 @@ clean:
 	ctags -e -R . # Generate ctags
 	rm -f `find $(PWD) -name *.o`
 	rm -rf `find $(PWD) -name *.dSYM`
-	$(MAKE) -f source/Stack/Makefile clean
-	rm -f autoscrum
-	rm -f client
+	rm -rf $(PWD)/lib
 
 ###############################################################################

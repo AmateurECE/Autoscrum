@@ -7,7 +7,7 @@
  *
  * CREATED:	    07/31/2018
  *
- * LAST EDITED:	    07/31/2018
+ * LAST EDITED:	    08/30/2018
  ***/
 
 /******************************************************************************
@@ -20,13 +20,13 @@
  * STATIC FUNCTION PROTOTYPES
  ***/
 
-static int testFail();
-static int testPass();
+static int thisTestWillFail();
+static int thisTestWillPass();
 
 /* This macro invocation is required to make the test harness happy */
 TestHarness_tests(
-		  testPass,
-		  testFail
+		  thisTestWillPass,
+		  thisTestWillFail
 		  );
 
 /******************************************************************************
@@ -34,7 +34,7 @@ TestHarness_tests(
  ***/
 
 /******************************************************************************
- * FUNCTION:	    testFail
+ * FUNCTION:	    thisTestWillFail
  *
  * DESCRIPTION:	    This test is meant to fail, always.
  *
@@ -42,13 +42,13 @@ TestHarness_tests(
  *
  * RETURN:	    int -- FAILURE
  ***/
-static int testFail()
+static int thisTestWillFail()
 {
   return FAILURE;
 }
 
 /******************************************************************************
- * FUNCTION:	    testPass
+ * FUNCTION:	    thisTestWillPass
  *
  * DESCRIPTION:	    This test is meant to pass, always.
  *
@@ -56,7 +56,7 @@ static int testFail()
  *
  * RETURN:	    int -- SUCCESS.
  ***/
-static int testPass()
+static int thisTestWillPass()
 {
   return SUCCESS;
 }
